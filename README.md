@@ -76,7 +76,7 @@ NOTIFIABLE_USERS="mary,emma,jack"
 
 ## Docker Image
 
-You can find the docker images provided for the project here.
+You can find the docker images provided for the project [here](https://hub.docker.com/r/evakdev/phabby).
 
 ## Contribution Guide
 
