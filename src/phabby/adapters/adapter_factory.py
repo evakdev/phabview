@@ -10,6 +10,6 @@ class MessagingAdapterEnum(enum.Enum):
 
 class AdapterFactory:
     def get_adapter(self):
-        if MessagingAdapterEnum.rocketchat == MESSAGING_ADAPTER:
+        if MESSAGING_ADAPTER == MessagingAdapterEnum.rocketchat.value:
             return RocketChatAdapter()
         raise NotImplementedError(f"Messaging Adapter named {MESSAGING_ADAPTER} does not exist.")
