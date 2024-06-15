@@ -1,7 +1,7 @@
 import hashlib
 import hmac
 from http import HTTPStatus
-
+from asgiref.wsgi import WsgiToAsgi
 from phabby.config import (
     NOTIFIABLE_USERS,
     NOTIFY_ANY_USER,
@@ -55,5 +55,9 @@ async def receive_webhook():
     return Response(status=HTTPStatus.OK)
 
 
+asgi_app = WsgiToAsgi(app)
+
 if __name__ == "__main__":
-    app.run(port=8000)
+    import uvicorn
+
+    uvicorn.run(asgi_app, host="0.0.0.0", port=8000)

@@ -12,5 +12,5 @@ RUN pip install -r requirements.lock --no-cache-dir
 COPY src .
 
 EXPOSE 8000
-CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8000", "phabby.main:app"]
+CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8000", "phabby.main:asgi_app"]
 
