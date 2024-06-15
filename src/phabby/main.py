@@ -19,15 +19,15 @@ app = Flask("Phabby")
 
 @app.route("/receive_webhook", methods=["POST"])
 async def receive_webhook():
-    hmac_object = hmac.new(
-        key=bytes(PHABRICATOR_WEBHOOK_HMAC_KEY, "utf-8"),
-        msg=request.data,
-        digestmod=hashlib.sha256,
-    )
-    signature = hmac_object.hexdigest()
-    hmac_header = request.headers.get(PHABRICATOR_HMAC_HEADER_NAME)
-    if hmac_header != signature:
-        raise Exception
+    # hmac_object = hmac.new(
+    #     key=bytes(PHABRICATOR_WEBHOOK_HMAC_KEY, "utf-8"),
+    #     msg=request.data,
+    #     digestmod=hashlib.sha256,
+    # )
+    # signature = hmac_object.hexdigest()
+    # hmac_header = request.headers.get(PHABRICATOR_HMAC_HEADER_NAME)
+    # if hmac_header != signature:
+    #     raise Exception
     data = request.json
     changed_object = data["object"]
 
@@ -46,7 +46,8 @@ async def receive_webhook():
     messaging_adapter = AdapterFactory().get_adapter()
     if NOTIFY_ANY_USER:
         for notification in notifications:
-            await messaging_adapter.send(notification["user"], notification["text"])
+            print(f'to {notification["user"]}: {notification["text"]}')
+            # await messaging_adapter.send(notification["user"], notification["text"])
         return Response(status=HTTPStatus.OK)
     for notification in notifications:
         if notification["user"] in NOTIFIABLE_USERS:
