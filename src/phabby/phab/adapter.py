@@ -24,9 +24,10 @@ class PhabricatorAdapter:
         return None
 
     def get_transactions(self, object_phid: str, transaction_phids: list[str]) -> list:
+        constraints = {"phids": transaction_phids} if transaction_phids else None
         return self.api.transaction.search(
             objectIdentifier=object_phid,
-            constraints={"phids": transaction_phids},
+            constraints=constraints,
         ).get("data", [])
 
     def get_user(self, phid: str) -> dict | None:
