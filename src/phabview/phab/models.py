@@ -28,9 +28,7 @@ class Revision:
         self.phid = raw_revision["phid"]
         self.link = raw_revision["fields"]["uri"]
         self.owner = raw_revision["fields"]["authorPHID"]
-        self.subscribers = raw_revision["attachments"]["subscribers"].get(
-            "subscriberPHIDs", [],
-        )
+        self.subscribers = raw_revision["attachments"]["subscribers"].get("subscriberPHIDs", [])
         self.reviewers = []
         for reviewer in raw_revision["attachments"]["reviewers"]["reviewers"]:
             self.reviewers.append(

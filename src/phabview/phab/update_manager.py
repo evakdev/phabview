@@ -44,9 +44,7 @@ class UpdateManager:
         self.notification_builder = NotificationBuilder()
 
     def get_update(self, changed_object: dict, transactions: list[str]):
-        raw_update_list = PhabricatorAdapter().get_transactions(
-            changed_object["phid"], transaction_phids=transactions,
-        )
+        raw_update_list = PhabricatorAdapter().get_transactions(changed_object["phid"], transaction_phids=transactions)
         generic_update = None
         for raw_update in raw_update_list:
             update_type = raw_update["type"]
