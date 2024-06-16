@@ -1,4 +1,4 @@
-from phabby.utils import Singleton
+from phabview.utils import Singleton
 
 
 class BaseMessagingAdapter:

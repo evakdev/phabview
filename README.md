@@ -1,11 +1,11 @@
-# Phabby
+# PhabView
 
-Phabby is a bot that gets Phabricator revision updates from webhook
+Phabview is a bot that gets Phabricator revision updates from webhook
 and translates them to nice, readable notifications in
 your company messaging app.
 
-### What does Phabby notify about?
-Phabby will notify your users in DM when there are:
+### What kind of notifications will we be getting?
+PhabView will notify your users in DM when there are:
 
 - New updates on a revision they created (reviews, comments)
 - New revisions where their review is requested
@@ -64,7 +64,7 @@ Add the following envs:
 
 ### 4. Setup Notifiable Users
 
-Phabby is designed to notify in DMs. 
+PhabView is designed to notify in DMs. 
 If you want all of your users to receive phabricator updates, set `NOTIFY_ANY_USER` to `True`
 
 Otherwise, you can go with an opt-in method an add interested users' usernames in `NOTIFIABLE_USERS` env like this:
@@ -72,11 +72,11 @@ Otherwise, you can go with an opt-in method an add interested users' usernames i
 NOTIFIABLE_USERS="mary,emma,jack"
 ```
 
-**Note:** Phabby currently assumes same usernames for Phabricator and Rocketchat.
+**Note:** PhabView currently assumes same usernames for Phabricator and Rocketchat.
 
 ## Docker Image
 
-You can find the docker images provided for the project [here](https://hub.docker.com/r/evakdev/phabby).
+You can find the docker images provided for the project [here](https://hub.docker.com/r/evakdev/phabview).
 
 ## Contribution Guide
 
@@ -92,5 +92,5 @@ You can find the docker images provided for the project [here](https://hub.docke
 
 4. Start the project:
    ```bash
-   python src/phabby/main.py
+   python src/phabview/main.py
    ```

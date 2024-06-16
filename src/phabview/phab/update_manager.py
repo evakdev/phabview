@@ -1,6 +1,6 @@
-from phabby.notification_builder import NotificationBuilder
-from phabby.phab.adapter import PhabricatorAdapter
-from phabby.phab.models import Revision, Update, UpdateTypeEnum
+from phabview.notification_builder import NotificationBuilder
+from phabview.phab.adapter import PhabricatorAdapter
+from phabview.phab.models import Revision, Update, UpdateTypeEnum
 
 a = {
     "data": [

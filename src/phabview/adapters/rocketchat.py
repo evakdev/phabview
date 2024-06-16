@@ -1,5 +1,5 @@
-from phabby.adapters.base_adapter import BaseMessagingAdapter
-from phabby.config import ROCKETCHAT_HOST, ROCKETCHAT_PASSWORD, ROCKETCHAT_USERNAME
+from phabview.adapters.base_adapter import BaseMessagingAdapter
+from phabview.config import ROCKETCHAT_HOST, ROCKETCHAT_PASSWORD, ROCKETCHAT_USERNAME
 from retry import retry
 from rocketchat_API.rocketchat import RocketChat
 

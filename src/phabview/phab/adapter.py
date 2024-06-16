@@ -1,4 +1,4 @@
-from phabby.config import PHABRICATOR_HOST, PHABRICATOR_TOKEN, PHABRICATOR_USERNAME
+from phabview.config import PHABRICATOR_HOST, PHABRICATOR_TOKEN, PHABRICATOR_USERNAME
 from phabricator import Phabricator
 
 

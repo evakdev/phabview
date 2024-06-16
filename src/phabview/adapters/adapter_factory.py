@@ -1,7 +1,7 @@
 import enum
 
-from phabby.adapters.rocketchat import RocketChatAdapter
-from phabby.config import MESSAGING_ADAPTER
+from phabview.adapters.rocketchat import RocketChatAdapter
+from phabview.config import MESSAGING_ADAPTER
 
 
 class MessagingAdapterEnum(enum.Enum):

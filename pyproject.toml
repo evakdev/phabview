@@ -1,5 +1,5 @@
 [project]
-name = "phabby"
+name = "phabview"
 version = "0.1.0"
 description = "A Phabricator bot to notify messaging app users about revision updates."
 authors = [
@@ -30,7 +30,7 @@ dev-dependencies = ["black==23.7.0"]
 allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/phabbybot"]
+packages = ["src/phabview"]
 
 [tool.ruff]
 line-length = 120

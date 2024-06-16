@@ -2,7 +2,7 @@ import hashlib
 import hmac
 from http import HTTPStatus
 from asgiref.wsgi import WsgiToAsgi
-from phabby.config import (
+from phabview.config import (
     NOTIFIABLE_USERS,
     NOTIFY_ANY_USER,
     PHABRICATOR_HMAC_HEADER_NAME,
@@ -11,10 +11,10 @@ from phabby.config import (
 )
 from flask import Flask, Response, request
 
-from phabby.adapters.adapter_factory import AdapterFactory
-from phabby.phab.update_manager import UpdateManager
+from phabview.adapters.adapter_factory import AdapterFactory
+from phabview.phab.update_manager import UpdateManager
 
-app = Flask("Phabby")
+app = Flask("PhabView")
 
 
 @app.route("/receive_webhook", methods=["POST"])
