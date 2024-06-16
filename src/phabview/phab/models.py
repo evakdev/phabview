@@ -60,25 +60,17 @@ class Update:
         self.change_user = change_user
 
     @property
-    def to_be_notified_users(self) -> list[str]:
+    def to_be_notified_reviewers(self) -> list[str]:
         match self.update_type:
             case UpdateTypeEnum.generic.value:
                 notifiable_reviewers = []
             case UpdateTypeEnum.update.value | UpdateTypeEnum.create.value:
-                notifiable_reviewers = [
-                    reviewer.phid for reviewer in self.revision.reviewers
-                ]
+                notifiable_reviewers = [reviewer.phid for reviewer in self.revision.reviewers]
             case UpdateTypeEnum.comment.value:
                 notifiable_reviewers = [
-                    reviewer.phid
-                    for reviewer in self.revision.reviewers
-                    if reviewer.has_contributed
+                    reviewer.phid for reviewer in self.revision.reviewers if reviewer.has_contributed
                 ]
             case _:
                 notifiable_reviewers = []
 
-        users = set(
-            [self.revision.owner] + self.revision.subscribers + notifiable_reviewers,
-        )
-        users.discard(self.change_user)
-        return list(users)
+        return list(notifiable_reviewers)

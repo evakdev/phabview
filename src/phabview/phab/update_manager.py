@@ -69,48 +69,57 @@ class UpdateManager:
                 return update
         # We only return a generic update if no named update was found
         return generic_update
-    def get_to_be_notified_usernames(self, update: Update) -> list[str]:
-        usernames = []
-        for phid in update.to_be_notified_users:
-            usernames.append(self.phabricator_adapter.get_user_username(phid))
 
-        return usernames
+    def get_to_be_notified_users(self, update: Update) -> dict:
+        # this list is in order. just in case there is a role overlap, we will notify for
+        # the most important role. subscriber < reviewer < owner
+
+        to_be_notified_users = {}
+        for user in update.revision.subscribers:
+            to_be_notified_users[user] = "subscriber"
+        for user in update.to_be_notified_reviewers:
+            to_be_notified_users[user] = "reviewer"
+        to_be_notified_users[update.revision.owner] = "owner"
+
+        to_be_notified_users.pop(update.change_user, None)
+        return to_be_notified_users
 
     def create_notifs(self, update: Update):
-        notifiable_user_names = self.get_to_be_notified_usernames(update)
-        change_user_name=self.phabricator_adapter.get_user_username(update.change_user)
+        users = self.get_to_be_notified_users(update)
+        change_username = self.phabricator_adapter.get_user_username(update.change_user)
+
         notifications = []
-        for user in notifiable_user_names:
-            notification = {"user": user}
+        for user_phid, role in users.items():
+            username = self.phabricator_adapter.get_user_username(user_phid)
+            notification = {"username": username}
+            is_subscriber = role == "subscriber"
             match update.update_type:
                 case UpdateTypeEnum.create.value:
                     notification["text"] = self.notification_builder.new_review_request(
-                        change_user_name, update.revision.link,
+                        creator_user=change_username, revision_link=update.revision.link, is_subscriber=is_subscriber
                     )
                 case UpdateTypeEnum.update.value:
-                    notification["text"] = (
-                        self.notification_builder.new_update_review_request(
-                            change_user_name, update.revision.link,
-                        )
+                    notification["text"] = self.notification_builder.new_update_review_request(
+                        creator_user=change_username, revision_link=update.revision.link, is_subscriber=is_subscriber
                     )
                 case UpdateTypeEnum.comment.value:
                     if update.change_user == update.revision.owner:
                         # Owner responded to a comment
-                        notification["text"] = (
-                            self.notification_builder.new_comment_by_owner(
-                                change_user_name, update.revision.link,
-                            )
+                        notification["text"] = self.notification_builder.new_comment_by_owner(
+                            creator_user=change_username,
+                            revision_link=update.revision.link,
+                            is_subscriber=is_subscriber,
                         )
                     else:
                         # it was probably a review:
-                        notification["text"] = (
-                            self.notification_builder.new_incoming_review(
-                                change_user_name, update.revision.link,
-                            )
+                        notification["text"] = self.notification_builder.new_incoming_review(
+                            creator_user=change_username,
+                            revision_link=update.revision.link,
+                            is_subscriber=is_subscriber,
                         )
                 case UpdateTypeEnum.generic.value:
                     notification["text"] = self.notification_builder.new_generic_update(
-                        change_user_name, update.revision.link,
+                        creator_user=change_username, revision_link=update.revision.link, is_subscriber=is_subscriber
                     )
             notifications.append(notification)
         return notifications
