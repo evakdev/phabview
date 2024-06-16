@@ -11,7 +11,7 @@
 -e file:.
 asgiref==3.8.1
     # via flask
-black==23.7.0
+black==24.4.2
 blinker==1.8.2
     # via flask
 certifi==2024.6.2
