@@ -10,8 +10,8 @@ app = Flask("PhabView")
 @app.route("/receive_webhook", methods=["POST"])
 async def receive_webhook():
     phabview = PhabView()
-    hmac_header = request.headers.get(PHABRICATOR_HMAC_HEADER_NAME)
-    phabview.verify_hmac(request_data=request.data, hmac_header=hmac_header)
+    # hmac_header = request.headers.get(PHABRICATOR_HMAC_HEADER_NAME)
+    # phabview.verify_hmac(request_data=request.data, hmac_header=hmac_header)
     await phabview.handle(request.json)
 
     return Response(status=HTTPStatus.OK)

@@ -25,8 +25,9 @@ class PhabView:
         changed_object = webhook_data["object"]
 
         if changed_object["type"] != PHABRICATOR_REVISION_TYPE_NAME:
+            print(f"Invalid webhook type: {changed_object['type']}")
             return
-
+        print(f"webhook_data:\n{webhook_data}")
         raw_transactions = self._get_raw_transactions(webhook_data)
         phabricator_update_manager = UpdateManager()
         update = phabricator_update_manager.get_update(changed_object, raw_transactions)
