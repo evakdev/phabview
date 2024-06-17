@@ -62,9 +62,12 @@ class UpdateManager:
                 change_user=raw_update["authorPHID"],
                 revision=revision,
             )
-            if update_type != UpdateTypeEnum.generic.value:
+            if update_type == UpdateTypeEnum.generic.value:
+                generic_update = update
+            else:
                 # If update has type, it has priority over unknowns.
                 return update
+
         # We only return a generic update if no named update was found
         return generic_update
 
