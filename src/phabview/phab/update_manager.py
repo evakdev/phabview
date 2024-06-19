@@ -88,8 +88,9 @@ class UpdateManager:
     def create_notifs(self, update: Update):
         users = self.get_to_be_notified_users(update)
         change_username = self.phabricator_adapter.get_user_username(update.change_user)
-
         notifications = []
+        if not change_username:  # It's Harbormaster
+            return notifications
         for user_phid, role in users.items():
             username = self.phabricator_adapter.get_user_username(user_phid)
             notification = {"username": username}
