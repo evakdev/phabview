@@ -25,12 +25,17 @@ class NotificationBuilder:
             )
         return f"{creator_user} has responded to a comment in their revision. Check it out: {revision_link}"
 
-    def new_incoming_review(self, creator_user: str, revision_link: str, is_subscriber=False) -> str:
+    def new_incoming_review_generic(
+        self, creator_user: str, revision_link: str, is_subscriber=False
+    ) -> str:
         if is_subscriber:
             return (
                 f"{creator_user} has reviewed changes in a revision you're subscribed to. "
                 f"Check it out here: {revision_link}"
             )
+        return f"{creator_user} has reviewed changed in one of your assigned reviews. Add yours here: {revision_link}"
+
+    def new_incoming_review_for_owner(self, creator_user: str, revision_link: str):
         return f"{creator_user} has reviewed your changes. Check out their comments here: {revision_link}"
 
     def new_generic_update(self, creator_user: str, revision_link: str, is_subscriber=False) -> str:

@@ -113,12 +113,17 @@ class UpdateManager:
                             is_subscriber=is_subscriber,
                         )
                     else:
-                        # it was probably a review:
-                        notification["text"] = self.notification_builder.new_incoming_review(
-                            creator_user=change_username,
-                            revision_link=update.revision.link,
-                            is_subscriber=is_subscriber,
-                        )
+                        # it was probably a review
+                        if role == "owner":
+                            notification["text"] = self.notification_builder.new_incoming_review_for_owner(
+                                creator_user=change_username, revision_link=update.revision.link
+                            )
+                        else:
+                            notification["text"] = self.notification_builder.new_incoming_review_generic(
+                                creator_user=change_username,
+                                revision_link=update.revision.link,
+                                is_subscriber=is_subscriber,
+                            )
                 case UpdateTypeEnum.generic.value:
                     notification["text"] = self.notification_builder.new_generic_update(
                         creator_user=change_username, revision_link=update.revision.link, is_subscriber=is_subscriber
