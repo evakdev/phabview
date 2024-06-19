@@ -2,42 +2,6 @@ from phabview.notification_builder import NotificationBuilder
 from phabview.phab.adapter import PhabricatorAdapter
 from phabview.phab.models import Revision, Update, UpdateTypeEnum
 
-a = {
-    "data": [
-        {
-            "id": 17,
-            "phid": "PHID-XACT-HWBH-flt3laqvlpodgkm",
-            "type": None,
-            "authorPHID": "PHID-USER-ooluj6mheatikw2idi6l",
-            "objectPHID": "PHID-HWBH-fuvlunlvwirxklq364py",
-            "dateCreated": 1718291149,
-            "dateModified": 1718291149,
-            "groupID": "sarogp6iaozx7kqxjpr6e6punwip46dq",
-            "comments": [],
-            "fields": {},
-        },
-    ],
-    "cursor": {"limit": 100, "after": None, "before": None},
-}
-b = {
-    "data": [
-        {
-            "id": 13509,
-            "phid": "PHID-XACT-DREV-mexevxrqgvrcci2",
-            "type": None,
-            "authorPHID": "PHID-USER-ooluj6mheatikw2idi6l",
-            "objectPHID": "PHID-DREV-ntxkd5nonzb2w2al72tz",
-            "dateCreated": 1718291182,
-            "dateModified": 1718291182,
-            "groupID": "bgboq6xcourgtei53rdsk4gwf533vrfw",
-            "comments": [],
-            "fields": {},
-        },
-    ],
-    "cursor": {"limit": 100, "after": None, "before": None},
-}
-
-
 class UpdateManager:
     def __init__(self):
         self.phabricator_adapter = PhabricatorAdapter()
