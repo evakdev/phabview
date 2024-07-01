@@ -1,5 +1,5 @@
 from phabview.adapters.base_adapter import BaseMessagingAdapter
-from phabview.config import ROCKETCHAT_HOST, ROCKETCHAT_PASSWORD, ROCKETCHAT_USERNAME
+from phabview.config import ROCKETCHAT_HOST, ROCKETCHAT_USER_ID, ROCKET_CHAT_USER_TOKEN
 from retry import retry
 from rocketchat_API.rocketchat import RocketChat
 
@@ -7,8 +7,8 @@ from rocketchat_API.rocketchat import RocketChat
 class RocketChatAdapter(BaseMessagingAdapter):
     def __init__(self):
         self.api = RocketChat(
-            user=ROCKETCHAT_USERNAME,
-            password=ROCKETCHAT_PASSWORD,
+            user_id=ROCKETCHAT_USER_ID,
+            auth_token=ROCKET_CHAT_USER_TOKEN,
             server_url=ROCKETCHAT_HOST,
         )
 

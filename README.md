@@ -59,8 +59,9 @@ Login to your Rocketchat Instance as an admin user, and create a bot user here:
 Add the following envs:
 
 - ROCKETCHAT_HOST
-- ROCKETCHAT_USERNAME
-- ROCKETCHAT_PASSWORD
+- ROCKETCHAT_USER_ID
+- ROCKET_CHAT_USER_TOKEN
+
 
 ### 4. Setup Notifiable Users
 
