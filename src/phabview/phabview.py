@@ -43,12 +43,12 @@ class PhabView:
         if NOTIFY_ANY_USER:
             for notification in notifications:
                 print(f'to {notification["username"]}: {notification["text"]}')
-                await messaging_adapter.send(notification["username"], notification["text"])
+                await messaging_adapter.send_to_user_dm(notification["username"], notification["text"])
             return
         for notification in notifications:
             if notification["username"] in NOTIFIABLE_USERS:
                 print(f'to {notification["username"]}: {notification["text"]}')
-                await messaging_adapter.send(notification["username"], notification["text"])
+                await messaging_adapter.send_to_user_dm(notification["username"], notification["text"])
 
     def _get_raw_transactions(self, webhook_data):
         transactions = []

@@ -13,5 +13,6 @@ class RocketChatAdapter(BaseMessagingAdapter):
         )
 
     @retry(delay=10, tries=10, backoff=2)
-    async def send(self, room: str, message: str):
-        self.api.chat_post_message(room, message)
+    def send_to_user_dm(self, username: str, message: str):
+        response = self.api.chat_post_message(text=message, channel=f"@{username}").json()
+        response.raise_for_status()
