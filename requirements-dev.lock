@@ -24,6 +24,7 @@ click==8.1.7
     # via uvicorn
 decorator==5.1.1
     # via retry
+    # via retry-async
 flask==3.0.3
     # via phabview
 gunicorn==22.0.0
@@ -59,6 +60,8 @@ requests==2.32.3
     # via phabricator
     # via rocketchat-api
 retry==0.9.2
+    # via phabview
+retry-async==0.1.4
     # via phabview
 rocketchat-api==1.32.0
     # via phabview
