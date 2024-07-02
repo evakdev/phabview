@@ -12,5 +12,5 @@ RUN pip install -r requirements.lock --no-cache-dir
 COPY src .
 
 EXPOSE 8000
-CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8000", "phabview.main:asgi_app"]
+CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8000", "--timeout", "60","--log-level", "debug", "phabview.main:asgi_app"]
 

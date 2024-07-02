@@ -13,7 +13,7 @@ class RocketChatAdapter(BaseMessagingAdapter):
         )
 
     @retry(delay=10, tries=10, backoff=2)
-    def send_to_user_dm(self, username: str, message: str):
+    async def send_to_user_dm(self, username: str, message: str):
         alias = ROCKET_CHAT_BOT_ALIAS_NAME or None
         response = self.api.chat_post_message(text=message, channel=f"@{username}", alias=alias).json()
         response.raise_for_status()
