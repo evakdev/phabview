@@ -40,13 +40,8 @@ class PhabView:
     async def send_notifications(self, notifications):
         messaging_adapter = AdapterFactory().get_adapter()
 
-        if NOTIFY_ANY_USER:
-            for notification in notifications:
-                print(f'to {notification["username"]}: {notification["text"]}')
-                await messaging_adapter.send_to_user_dm(notification["username"], notification["text"])
-            return
         for notification in notifications:
-            if notification["username"] in NOTIFIABLE_USERS:
+            if NOTIFY_ANY_USER or notification["username"] in NOTIFIABLE_USERS:
                 print(f'to {notification["username"]}: {notification["text"]}')
                 await messaging_adapter.send_to_user_dm(notification["username"], notification["text"])
 
