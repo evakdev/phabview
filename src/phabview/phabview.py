@@ -42,8 +42,11 @@ class PhabView:
 
         for notification in notifications:
             if NOTIFY_ANY_USER or notification["username"] in NOTIFIABLE_USERS:
-                print(f'to {notification["username"]}: {notification["text"]}')
-                await messaging_adapter.send_to_user_dm(notification["username"], notification["text"])
+                try:
+                    print(f'to {notification["username"]}: {notification["text"]}')
+                    await messaging_adapter.send_to_user_dm(notification["username"], notification["text"])
+                except Exception as e:
+                    print(e)
 
     def _get_raw_transactions(self, webhook_data):
         transactions = []
