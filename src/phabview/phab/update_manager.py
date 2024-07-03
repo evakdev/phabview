@@ -10,6 +10,8 @@ class UpdateManager:
 
     def get_update(self, changed_object: dict, transactions: list[str]):
         raw_update_list = PhabricatorAdapter().get_transactions(changed_object["phid"], transaction_phids=transactions)
+        # Get first update, first. This helps avoid sending update notif when there was a create first
+        raw_update_list.reverse()
         generic_update = None
         for raw_update in raw_update_list:
             update_type = raw_update["type"]
