@@ -38,6 +38,7 @@ class Revision:
 
 class UpdateTypeEnum(enum.Enum):
     comment = "comment"
+    inline = "inline"
     create = "create"
     update = "update"
     generic = "generic"
@@ -64,7 +65,7 @@ class Update:
                 notifiable_reviewers = []
             case UpdateTypeEnum.update.value | UpdateTypeEnum.create.value:
                 notifiable_reviewers = [reviewer.phid for reviewer in self.revision.reviewers]
-            case UpdateTypeEnum.comment.value:
+            case UpdateTypeEnum.comment.value | UpdateTypeEnum.inline.value:
                 notifiable_reviewers = [
                     reviewer.phid for reviewer in self.revision.reviewers if reviewer.has_contributed
                 ]

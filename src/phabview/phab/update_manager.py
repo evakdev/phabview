@@ -2,6 +2,7 @@ from phabview.notification_builder import NotificationBuilder
 from phabview.phab.adapter import PhabricatorAdapter
 from phabview.phab.models import Revision, Update, UpdateTypeEnum
 
+
 class UpdateManager:
     def __init__(self):
         self.phabricator_adapter = PhabricatorAdapter()
@@ -68,7 +69,7 @@ class UpdateManager:
                     notification["text"] = self.notification_builder.new_update_review_request(
                         creator_user=change_username, revision_link=update.revision.link, is_subscriber=is_subscriber
                     )
-                case UpdateTypeEnum.comment.value:
+                case UpdateTypeEnum.comment.value | UpdateTypeEnum.inline.value:
                     if update.change_user == update.revision.owner:
                         # Owner responded to a comment
                         notification["text"] = self.notification_builder.new_comment_by_owner(
