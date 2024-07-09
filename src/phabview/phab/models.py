@@ -13,6 +13,13 @@ class Reviewer:
     def has_contributed(self) -> bool:
         return self.status != "added"
 
+    @property
+    def is_individual(self) -> bool:
+        return self.phid.startswith("PHID-USER")
+
+    @property
+    def is_group(self)->bool:
+        return self.phid.startswith("PHID-PROJ")
 
 class Revision:
     phid: str

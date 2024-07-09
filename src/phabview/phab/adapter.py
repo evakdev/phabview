@@ -36,8 +36,19 @@ class PhabricatorAdapter:
             return users[0]
         return None
 
+    def get_project(self, phid: str) -> dict | None:
+        project = self.api.project.search(constraints={"phids": [phid]}, attachments={"members": True}).get("data", [])
+        if project:
+            return project[0]
+        return None
+
     def get_user_username(self, phid: str) -> str | None:
         user_object = self.get_user(phid)
         if user_object:
             return user_object["fields"]["username"]
         return None
+
+    def get_project_members(self, phid: str) -> list[str]:
+        project = self.get_project(phid) or {}
+        members = project.get("attachments", {}).get("members", {}).get("members", [])
+        return [member["phid"] for member in members]

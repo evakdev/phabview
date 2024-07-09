@@ -1,6 +1,6 @@
 from phabview.notification_builder import NotificationBuilder
 from phabview.phab.adapter import PhabricatorAdapter
-from phabview.phab.models import Revision, Update, UpdateTypeEnum
+from phabview.phab.models import Revision, Update, UpdateTypeEnum, Reviewer
 
 
 class UpdateManager:
@@ -23,7 +23,7 @@ class UpdateManager:
                 raw_update["objectPHID"],
             )
             revision = Revision(raw_revision)
-
+            self.replace_groups_with_members(revision)
             update = Update(
                 update_type=update_type,
                 change_user=raw_update["authorPHID"],
@@ -37,6 +37,30 @@ class UpdateManager:
 
         # We only return a generic update if no named update was found
         return generic_update
+
+    def replace_groups_with_members(self, revision: Revision):
+        subscribers = []
+        for phid in revision.subscribers:
+            if phid.startswith("PHID-USER"):
+                subscribers.append(phid)
+            elif phid.startswith("PHID-PROJ"):
+                members = self.phabricator_adapter.get_project_members(phid)
+                subscribers.extend(members)
+        revision.subscribers = list(set(subscribers))
+        group_reviewers = []
+        individual_reviewers = {}
+        for reviewer in revision.reviewers:
+            if reviewer.is_group:
+                group_reviewers.append(reviewer)
+            else:
+                individual_reviewers[reviewer.phid] = reviewer
+        for group in group_reviewers:
+            members = self.phabricator_adapter.get_project_members(group.phid)
+            for member in members:
+                if individual_reviewers.get(member):
+                    continue
+                individual_reviewers[member] = Reviewer(phid=member, status=group.status)
+        revision.reviewers = list(individual_reviewers.values())
 
     def get_to_be_notified_users(self, update: Update) -> dict:
         # this list is in order. just in case there is a role overlap, we will notify for
