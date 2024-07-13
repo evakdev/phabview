@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Generic
+DEBUG = os.getenv("DEBUG", "False") == "True"
 NOTIFY_ANY_USER = os.getenv("NOTIFY_ANY_USER", "False") == "True"
 NOTIFIABLE_USERS = os.getenv("NOTIFIABLE_USERS", "").split(",")
 MESSAGING_ADAPTER = os.getenv("MESSAGING_ADAPTER", "rocketchat")

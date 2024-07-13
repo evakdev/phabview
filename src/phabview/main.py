@@ -1,9 +1,12 @@
+import logging
 from http import HTTPStatus
 from asgiref.wsgi import WsgiToAsgi
-from phabview.config import PHABRICATOR_HMAC_HEADER_NAME
+from phabview.config import PHABRICATOR_HMAC_HEADER_NAME, DEBUG
 from flask import Flask, Response, request
 from phabview.phabview import PhabView
 
+
+logging.getLogger().setLevel(logging.DEBUG if DEBUG else logging.INFO)
 app = Flask("PhabView")
 
 

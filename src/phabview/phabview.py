@@ -1,5 +1,7 @@
 import hashlib
 import hmac
+import logging
+
 from phabview.config import (
     PHABRICATOR_REVISION_TYPE_NAME,
     PHABRICATOR_WEBHOOK_HMAC_KEY,
@@ -25,9 +27,9 @@ class PhabView:
         changed_object = webhook_data["object"]
 
         if changed_object["type"] != PHABRICATOR_REVISION_TYPE_NAME:
-            print(f"Invalid webhook type: {changed_object['type']}")
+            logging.debug(f"Invalid webhook type: {changed_object['type']}")
             return
-        print(f"webhook_data:\n{webhook_data}")
+        logging.debug(f"webhook_data:\n{webhook_data}")
         raw_transactions = self._get_raw_transactions(webhook_data)
         phabricator_update_manager = UpdateManager()
         update = phabricator_update_manager.get_update(changed_object, raw_transactions)
@@ -43,10 +45,10 @@ class PhabView:
         for notification in notifications:
             if NOTIFY_ANY_USER or notification["username"] in NOTIFIABLE_USERS:
                 try:
-                    print(f'to {notification["username"]}: {notification["text"]}')
+                    logging.debug(f'to {notification["username"]}: {notification["text"]}')
                     await messaging_adapter.send_to_user_dm(notification["username"], notification["text"])
                 except Exception as e:
-                    print(e)
+                    logging.debug(e)
 
     def _get_raw_transactions(self, webhook_data):
         transactions = []

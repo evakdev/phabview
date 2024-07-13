@@ -1,5 +1,5 @@
 import enum
-
+import logging
 
 class Reviewer:
     phid: str
@@ -41,6 +41,7 @@ class Revision:
             self.reviewers.append(
                 Reviewer(phid=reviewer["reviewerPHID"], status=reviewer["status"]),
             )
+        logging.debug(self.link)
 
 
 class UpdateTypeEnum(enum.Enum):
